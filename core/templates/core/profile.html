@@ -32,7 +32,7 @@
 									<div class="min-w-full float-right text-sm">
 										<select name="height_ft" class="min-w-full block appearance-none bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-orange-500" id="grid-state">
 											{% for option in foot_fields %}
-												<option {% if profile.background.age == option %} selected {% endif %}>
+												<option {% if profile.background.height_ft == option %} selected {% endif %}>
 													{{ option }}
 												</option>
 											{% endfor %}
@@ -48,7 +48,7 @@
 									<div class="min-w-full float-right text-sm">
 										<select name="height_in" class="min-w-full block appearance-none bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-orange-500" id="grid-state">
 											{% for option in inch_fields %}
-												<option {% if profile.background.height == option %} selected {% endif %}>
+												<option {% if profile.background.height_in == option %} selected {% endif %}>
 													{{ option }}
 												</option>
 											{% endfor %}
