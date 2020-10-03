@@ -1,0 +1,37 @@
+{
+	"profile": {
+		"general": {
+			"arrythmia": "No", 
+			"heart_disease": "Yes", 
+			"high_blood_pressure": "No"
+		}, 
+		"background": {
+			"age": "18", 
+			"sex": "Male", 
+			"smoker": "No", 
+			"weight": "66 lb", 
+			"alcohol": "Light", 
+			"height_ft": "4 ft", 
+			"height_in": "4 in"
+		}, 
+		"family_history": {
+			"cancer": "No", 
+			"heart_disease": "Yes"
+		}
+	}, 
+	"sympton_logs": [
+		{"symptom": "Nervousness", "date": "2020-10-01", "score": 9}, 
+		{"symptom": "Nervousness", "date": "2020-10-02", "score": 10}, 
+		{"symptom": "Nervousness", "date": "2020-10-03", "score": 7}, 
+		{"symptom": "Nervousness", "date": "2020-10-04", "score": 6}, 
+		{"symptom": "Nervousness", "date": "2020-10-05", "score": 6}, 
+		{"symptom": "Nervousness", "date": "2020-10-06", "score": 5}, 
+		{"symptom": "Nervousness", "date": "2020-10-07", "score": 6}, 
+		{"symptom": "Disorientation", "date": "2020-10-01", "score": 5}, 
+		{"symptom": "Disorientation", "date": "2020-10-02", "score": 3}, 
+		{"symptom": "Disorientation", "date": "2020-10-03", "score": 5}, 
+		{"symptom": "Disorientation", "date": "2020-10-04", "score": 6}, 
+		{"symptom": "Disorientation", "date": "2020-10-05", "score": 5}, 
+		{"symptom": "Disorientation", "date": "2020-10-06", "score": 5}
+	]
+}
