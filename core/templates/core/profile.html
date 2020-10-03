@@ -1,0 +1,348 @@
+{% extends "core/layout.html" %}
+{% load static %}
+
+{% block script %}
+	{{ profile|json_script:"profile" }}
+	{{ user.id|json_script:"user_id" }}
+	
+	<script src="{% static 'core/profile.js' %}">
+	</script>
+{% endblock %}
+
+{% block body %}
+	
+	<div class="flex items-center justify-center">
+		<div class="w-full max-w-2xl">
+			<p class="pt-6 pb-4">Background</p>
+			<form id="background-form" class="bg-white shadow-md rounded px-6 pt-2 pb-4 mb-4" method="post">
+				
+				{# Height Input #}
+				<div class="flex items-center border-b py-2 border-orange-500">
+					<div class="w-1/3">
+						<label class="block text-sm text-black mb-1 pr-4" for="inline-full-name">
+							Height
+						</label>
+					</div>
+					<div class="w-1/3">
+					</div>
+					<div class="w-1/3">
+						<div class="flex">
+							<div class="w-1/2 pr-1">
+								<div class="max-x-none relative">
+									<div class="min-w-full float-right text-sm">
+										<select name="height_ft" class="min-w-full block appearance-none bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-orange-500" id="grid-state">
+											{% for option in foot_fields %}
+												<option {% if profile.background.age == option %} selected {% endif %}>
+													{{ option }}
+												</option>
+											{% endfor %}
+										</select>
+									</div>
+									<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 pt-5 text-gray-700">
+										<svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+									</div>
+								</div>
+							</div>
+							<div class="w-1/2 pl-1">
+								<div class="max-x-none relative">
+									<div class="min-w-full float-right text-sm">
+										<select name="height_in" class="min-w-full block appearance-none bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-orange-500" id="grid-state">
+											{% for option in inch_fields %}
+												<option {% if profile.background.height == option %} selected {% endif %}>
+													{{ option }}
+												</option>
+											{% endfor %}
+										</select>
+									</div>
+									<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 pt-5 text-gray-700">
+										<svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				{# Weight Input #}
+				<div class="flex items-center border-b py-2 border-orange-500">
+					<div class="w-1/3">
+						<label class="block text-sm text-black mb-1 pr-4" for="inline-full-name">
+							Weight
+						</label>
+					</div>
+					<div class="w-1/3">
+					</div>
+					<div class="w-1/3">
+						<div class="max-x-none relative">
+							<div class="min-w-full float-right text-sm">
+								<select name="weight" class="min-w-full block appearance-none bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-orange-500" id="grid-state">
+									{% for option in pound_fields %}
+										<option {% if profile.background.weight == option %} selected {% endif %}>
+											{{ option }}
+										</option>
+									{% endfor %}
+								</select>
+							</div>
+							<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 pt-5 text-gray-700">
+								<svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				{# Age Input #}
+				<div class="flex items-center border-b py-2 border-orange-500">
+					<div class="w-1/3">
+						<label class="block text-sm text-black mb-1 pr-4" for="inline-full-name">
+							Age
+						</label>
+					</div>
+					<div class="w-1/3">
+					</div>
+					<div class="w-1/3">
+						<div class="max-x-none relative">
+							<div class="min-w-full float-right text-sm">
+								<select name="age" class="min-w-full block appearance-none bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-orange-500" id="grid-state">
+									{% for option in age_fields %}
+										<option {% if profile.background.age == option %} selected {% endif %}>
+											{{ option }}
+										</option>
+									{% endfor %}
+								</select>
+							</div>
+							<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 pt-5 text-gray-700">
+								<svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				{# Sex Input #}
+				<div class="flex items-center border-b py-2 border-orange-500">
+					<div class="w-1/3">
+						<label class="block text-sm text-black mb-1 pr-4" for="inline-full-name">
+							Sex
+						</label>
+					</div>
+					<div class="w-1/3">
+					</div>
+					<div class="w-1/3">
+						<div class="relative">
+							<div class="min-w-full inline-flex float-right text-sm">
+								<select name="sex" class="min-w-full block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-orange-500" id="grid-state">
+									{% for option in sex_fields %}
+										<option {% if profile.background.sex == option %} selected {% endif %}>
+											{{ option }}
+										</option>
+									{% endfor %}
+								</select>
+							</div>
+							<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 pt-5 text-gray-700">
+								<svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				{# Smoker Input #}
+				<div class="flex items-center border-b py-2 border-orange-500">
+					<div class="w-1/3">
+						<label class="block text-sm text-black mb-1 pr-4" for="inline-full-name">
+							Smoker
+						</label>
+					</div>
+					<div class="w-1/3">
+					</div>
+					<div class="w-1/3">
+						<div class="relative">
+							<div class="min-w-full inline-flex float-right text-sm">
+								<select name="smoker" class="min-w-full block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-orange-500" id="grid-state">
+									{% for option in boolean_fields %}
+										<option {% if profile.background.smoker == option %} selected {% endif %}>
+											{{ option }}
+										</option>
+									{% endfor %}
+								</select>
+							</div>
+							<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 pt-5 text-gray-700">
+								<svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				{# Alcohol Input #}
+				<div class="flex items-center border-b py-2 border-orange-500">
+					<div class="w-1/3">
+						<label class="block text-sm text-black mb-1 pr-4" for="inline-full-name">
+							Alcohol
+						</label>
+					</div>
+					<div class="w-1/3">
+					</div>
+					<div class="w-1/3">
+						<div class="relative">
+							<div class="min-w-full inline-flex float-right text-sm">
+								<select name="alcohol" class="min-w-full block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-orange-500" id="grid-state">
+									{% for option in alcohol_fields %}
+										<option {% if profile.background.alcohol == option %} selected {% endif %}>
+											{{ option }}
+										</option>
+									{% endfor %}
+								</select>
+							</div>
+							<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 pt-5 text-gray-700">
+								<svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+			
+			<p class="pt-6 pb-4">General</p>
+			<form id="general-form" class="bg-white shadow-md rounded px-6 pt-2 pb-4 mb-4" method="post">
+				
+				{# Heart Disease Input #}
+				<div class="flex items-center border-b py-2 border-orange-500">
+					<div class="w-1/3">
+						<label class="block text-sm text-black mb-1 pr-4" for="inline-full-name">
+							Heart Disease
+						</label>
+					</div>
+					<div class="w-1/3">
+					</div>
+					<div class="w-1/3">
+						<div class="relative">
+							<div class="min-w-full inline-flex float-right text-sm">
+								<select name="heart_disease" class="min-w-full block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-orange-500" id="grid-state">
+									{% for option in boolean_fields %}
+										<option {% if profile.general.heart_disease == option %} selected {% endif %}>
+											{{ option }}
+										</option>
+									{% endfor %}
+								</select>
+							</div>
+							<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 pt-5 text-gray-700">
+								<svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				{# High Blood Pressure Input #}
+				<div class="flex items-center border-b py-2 border-orange-500">
+					<div class="w-1/3">
+						<label class="block text-sm text-black mb-1 pr-4" for="inline-full-name">
+							High Blood Pressure
+						</label>
+					</div>
+					<div class="w-1/3">
+					</div>
+					<div class="w-1/3">
+						<div class="relative">
+							<div class="min-w-full inline-flex float-right text-sm">
+								<select name="high_blood_pressure" class="min-w-full block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-orange-500" id="grid-state">
+									{% for option in boolean_fields %}
+										<option {% if profile.general.high_blood_pressure == option %} selected {% endif %}>
+											{{ option }}
+										</option>
+									{% endfor %}
+								</select>
+							</div>
+							<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 pt-5 text-gray-700">
+								<svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				{# Arrythmia Input #}
+				<div class="flex items-center border-b py-2 border-orange-500">
+					<div class="w-1/3">
+						<label class="block text-sm text-black mb-1 pr-4" for="inline-full-name">
+							Arrythmia
+						</label>
+					</div>
+					<div class="w-1/3">
+					</div>
+					<div class="w-1/3">
+						<div class="relative">
+							<div class="min-w-full inline-flex float-right text-sm">
+								<select name="arrythmia" class="min-w-full block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-orange-500" id="grid-state">
+									{% for option in boolean_fields %}
+										<option {% if profile.general.arrythmia == option %} selected {% endif %}>
+											{{ option }}
+										</option>
+									{% endfor %}
+								</select>
+							</div>
+							<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 pt-5 text-gray-700">
+								<svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+			
+			<p class="pt-6 pb-4">Family History</p>
+			<form id="family-history-form" class="bg-white shadow-md rounded px-6 pt-2 pb-4 mb-4" method="post">
+				
+				{# Heart Disease Input #}
+				<div class="flex items-center border-b py-2 border-orange-500">
+					<div class="w-1/3">
+						<label class="block text-sm text-black mb-1 pr-4" for="inline-full-name">
+							Heart Disease
+						</label>
+					</div>
+					<div class="w-1/3">
+					</div>
+					<div class="w-1/3">
+						<div class="relative">
+							<div class="min-w-full inline-flex float-right text-sm">
+								<select name="heart_disease" class="min-w-full block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-orange-500" id="grid-state">
+									{% for option in boolean_fields %}
+										<option {% if profile.family_history.heart_disease == option %} selected {% endif %}>
+											{{ option }}
+										</option>
+									{% endfor %}
+								</select>
+							</div>
+							<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 pt-5 text-gray-700">
+								<svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				{# Cancer Input #}
+				<div class="flex items-center border-b py-2 border-orange-500">
+					<div class="w-1/3">
+						<label class="block text-sm text-black mb-1 pr-4" for="inline-full-name">
+							Cancer
+						</label>
+					</div>
+					<div class="w-1/3">
+					</div>
+					<div class="w-1/3">
+						<div class="relative">
+							<div class="min-w-full inline-flex float-right text-sm">
+								<select name="cancer" class="min-w-full block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-orange-500" id="grid-state">
+									{% for option in boolean_fields %}
+										<option {% if profile.family_history.cancer == option %} selected {% endif %}>
+											{{ option }}
+										</option>
+									{% endfor %}
+								</select>
+							</div>
+							<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 pt-5 text-gray-700">
+								<svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+			
+		</div>
+	</div>
+	
+{% endblock %}

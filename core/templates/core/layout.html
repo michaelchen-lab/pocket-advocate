@@ -1,0 +1,50 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block title %}Pocket Advocate{% endblock %}</title>
+		<link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+		
+		{% block script %}
+		{% endblock %}
+		
+		{% block style %}
+		{% endblock %}
+    </head>
+	{% if user.is_authenticated %}
+		<body class="bg-gray-200">
+	{% else %}
+		<body class="bg-gray-200">
+	{% endif %}
+		{% if user.is_authenticated %}
+			<nav class="flex bg-orange-600 p-4 items-center">
+				<div class="flex text-white">
+					<a href="{% url 'index' %}" class="font-semibold text-xl tracking-tight">Pocket Advocate</a>
+				</div>
+				<div class="text-md">
+					<a href="#" class="ml-8 text-orange-300 hover:text-white">
+						Recommend Medication
+					</a>
+					<a 
+						{% if page_name == 'profile' %}
+							class="ml-4 text-white hover:text-white"
+						{% else %}
+							href="{% url 'profile' %}" 
+							class="ml-4 text-orange-300 hover:text-white"
+						{% endif %}
+					>
+						Profile
+					</a>
+				</div>
+				<div class="block flex-grow">
+					<div>
+						<a href="{% url 'logout' %}" class="inline-block float-right text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-white hover:bg-blue-700 mt-4 lg:mt-0">Logout</a>
+					</div>
+				</div>
+			</nav>
+		{% endif %}
+        {% block body %}
+        {% endblock %}
+    </body>
+</html>
