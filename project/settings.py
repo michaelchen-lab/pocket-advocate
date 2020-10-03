@@ -27,8 +27,8 @@ SECRET_KEY = '+_9^co0j4h0=4+#m796ca6e&af$ur&v6x4tlu#c#amo-szft0v'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    "pocket-advocate.herokuapp.com/",
-    "127.0.0.1:8000/"
+    "pocket-advocate.herokuapp.com",
+    "127.0.0.1:8000"
 ]
 
 
