@@ -1,31 +1,207 @@
 {% extends "core/layout.html" %}
+{% load static %}
+
+{% block script %}
+	<style>
+		.ct-series-a .ct-line {
+			/* Set the colour of this series line */
+			stroke: #FBD38D;
+			/* Control the thikness of your lines */
+			stroke-width: 3px;
+		}
+
+		.ct-series-a .ct-point {
+		  /* Colour of your points */
+		  stroke: #ED8936;
+		  /* Size of your points */
+		  stroke-width: 10px;
+		}
+	</style>
+{% endblock %}
 
 {% block body %}
 	
-	<div class="container mx-auto px-6 pt-4 h-90">
+	<div class="container mx-auto px-6 py-4 h-90">
 		<div class="grid grid-cols-4 gap-4">
+		
+			{# Sympton Log Entry #}
 			<div class="col-span-2">
-				<div class="flex w-full border rounded bg-white">
-					<div class="px-8 pt-2">
-						<h1>Column</h1>
+				<div class="flex w-full border rounded bg-white shadow-md">
+					<form class="w-full px-8 pt-2" method="POST">
+						<p class="text-lg pb-2 font-semibold">Symptom Log Entry</p>
+						{% csrf_token %}
+						
+						{# Symptom Input #}
+						<div class="relative text-sm pb-2">
+							<select name="symptom" class="min-w-full block appearance-none bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-orange-500" id="grid-state">
+								{% for symptom in symptoms_input %}
+									<option>{{ symptom }}</option>
+								{% endfor %}
+							</select>
+							<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+								<svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+							</div>
+						</div>
+						
+						{# Date Input #}
+						<div class="flex">
+							<div class="w-1/3 pr-1">
+								<div class="relative text-sm">
+									<select name="DD" class="min-w-full block appearance-none bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-orange-500" id="grid-state">
+										{% for date in dates_input %}
+											<option>{{ date }}</option>
+										{% endfor %}
+									</select>
+									<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+										<svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+									</div>
+								</div>
+							</div>
+							<div class="w-1/3 pr-1">
+								<div class="relative text-sm">
+									<select name="MM" class="min-w-full block appearance-none bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-orange-500" id="grid-state">
+										{% for month in months_input %}
+											<option>{{ month }}</option>
+										{% endfor %}
+									</select>
+									<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+										<svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+									</div>
+								</div>
+							</div>
+							<div class="w-1/3">
+								<div class="relative text-sm">
+									<select name="YY" class="min-w-full block appearance-none bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-orange-500" id="grid-state">
+										{% for year in years_input %}
+											<option>{{ year }}</option>
+										{% endfor %}
+									</select>
+									<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+										<svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						{# Date Input #}
+						<div class="flex py-2">
+							<div class="w-2/3 pr-1">
+								<input name="score" type="range" min="0" max="10" value="5" class="slider min-w-full align-bottom" id="myRange">
+							</div>
+							<div class="w-1/3">
+								<button class="float-right bg-orange-500 hover:bg-orange-700 text-white font-semibold py-1 px-4 rounded">
+									Add
+								</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			
+			{# Recent Recommendation #}
+			<div class="col-span-2 h-full">
+				<div class="flex h-full border rounded bg-white shadow-md">
+					<div class="w-full px-8 pt-2">
+						<p class="text-lg pb-2 font-semibold">Recent Recommendation</p>
+						<p class="text-sm text-center align-middle">Oops! No recommendations found.</p>
 					</div>
 				</div>
 			</div>
-			<div class="col-span-2">
-				<div class="flex w-full border rounded bg-white">
-					<h1>Column</h1>
-				</div>
-			</div>
+			
+			{# Symptom Log Visualization #}
 			<div class="col-span-3">
-				<div class="flex w-full border rounded bg-white">
-					<h1>Column</h1>
+				<div class="h-full border rounded bg-white shadow-md">
+					<div class="flex w-full px-8 py-2">
+						<div class="w-2/3">
+							<p class="text-lg pb-2 font-semibold">Symptom History</p>
+						</div>
+						<div class="w-1/3">
+							<div class="relative">
+								<select id="my_symptom" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+									{% for symptom, id in my_symptoms.items %}
+										<option>{{ symptom }}</option>
+									{% endfor %}
+								</select>
+								<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+									<svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="flex w-full px-8 py-2">
+						<div class="ct-chart ct-octave" id="graph"></div>
+					</div>
 				</div>
 			</div>
+			
+			{# Basic Background Info #}
 			<div class="col-span-1">
-				<div class="flex w-full border rounded bg-white">
-					<h1>Column</h1>
+				<div class="w-full border rounded bg-white shadow-md">
+					<div class="flex w-full px-8 py-2">
+						<p class="min-w-full text-lg pb-2 font-semibold border-b py-2 border-orange-500">Background</p>
+					</div>
+					<div class="flex w-full px-8 py-1">
+						<div class="w-2/3">
+							<p class="">Height</p>
+						</div>
+						<div class="w-1/3">
+							<p class="font-semibold text-orange-500">{{ background.height }}</span>
+						</div>
+					</div>
+					<div class="flex w-full px-8 py-1">
+						<div class="w-2/3">
+							<p class="">Weight</p>
+						</div>
+						<div class="w-1/3">
+							<p class="font-semibold text-orange-500">{{ background.weight }}</span>
+						</div>
+					</div>
+					<div class="flex w-full px-8 py-1">
+						<div class="w-2/3">
+							<p class="">Age</p>
+						</div>
+						<div class="w-1/3">
+							<p class="font-semibold text-orange-500">{{ background.age }}</span>
+						</div>
+					</div>
+					<div class="flex w-full px-8 py-1">
+						<div class="w-2/3">
+							<p class="">Sex</p>
+						</div>
+						<div class="w-1/3">
+							<p class="font-semibold text-orange-500">{{ background.sex }}</span>
+						</div>
+					</div>
+					<div class="flex w-full px-8 py-1">
+						<div class="w-2/3">
+							<p class="">Smoker</p>
+						</div>
+						<div class="w-1/3">
+							<p class="font-semibold text-orange-500">{{ background.smoker }}</span>
+						</div>
+					</div>
+					<div class="flex w-full px-8 pt-1 pb-6">
+						<div class="w-2/3">
+							<p class="">Alcohol</p>
+						</div>
+						<div class="w-1/3">
+							<p class="font-semibold text-orange-500">{{ background.alcohol }}</span>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+{% endblock %}
+
+{% block bodyScript %}
+
+	<script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+
+	{{ my_symptoms|json_script:"my_symptoms" }}
+	{{ records|json_script:"records" }}
+	
+	<script src="{% static 'core/home.js' %}">
+	</script>
+
 {% endblock %}

@@ -20,5 +20,6 @@ class SymptomRecord(models.Model):
     user = models.ForeignKey(User, related_name="SymptomRecords", on_delete=models.CASCADE)
     symptom = models.ForeignKey(Symptom, related_name="Logs", on_delete=models.CASCADE)
     
-    date = models.DateTimeField(auto_now_add=True)
+    date = models.DateField()
     score = models.IntegerField()
+    

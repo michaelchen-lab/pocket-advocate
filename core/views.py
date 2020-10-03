@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
@@ -5,7 +7,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 
-from .models import User, Profile
+from .models import User, Profile, Symptom, SymptomRecord
 
 global PROFILE_FIELDS
 PROFILE_FIELDS = {
@@ -29,9 +31,55 @@ PROFILE_FIELDS = {
         }  
     }
 
+def is_date_valid(DD, MM, YY):
+    try:
+        dt = datetime(int(YY), int(MM), int(DD))
+        return True
+    except:
+        return False
+
 @login_required(redirect_field_name=None)
 def index(request):
-    return render(request, "core/home.html")
+    if request.method == "POST":
+        symptom = request.POST["symptom"]
+        DD, MM, YY = request.POST["DD"], request.POST["MM"], request.POST["YY"]
+        score = request.POST["score"]
+        
+        print(DD, MM, YY)
+        
+        if symptom == "Your Symptom..." or DD == "DD" or MM == "MM" or YY == "YY":
+            print('error')
+        elif not is_date_valid(DD, MM, YY):
+            print('error')
+        else:
+            record = SymptomRecord(
+                user = request.user, 
+                symptom = Symptom.objects.get(title=symptom),
+                date = YY+"-"+MM+"-"+DD,
+                score = int(score)
+            )
+            record.save()
+    
+    records = list(request.user.SymptomRecords.order_by('symptom_id', 'date').values('symptom_id', 'date', 'score'))
+    symptom_ids = list(set([record['symptom_id'] for record in records]))
+    my_symptoms = {Symptom.objects.get(id=id).title:id for id in symptom_ids}
+    
+    background = request.user.profile.profile['background']
+    background['height'] = background['height_ft'] + ' ' + background['height_in']
+    print(background)
+    
+    symptoms = [symptom.title if len(symptom.title) < 70 else symptom.title[:70]+'...' for symptom in Symptom.objects.all()]
+
+    return render(request, "core/home.html", {
+        "symptoms_input": ['Your Symptom...']+symptoms,
+        "dates_input": ['DD']+[str(d) if len(str(d)) == 2 else '0'+str(d) for d in range(1,32)],
+        "months_input": ['MM']+[str(d) if len(str(d)) == 2 else '0'+str(d) for d in range(1,13)],
+        "years_input": ['YY']+list(range(2016, 2021)),
+        
+        "my_symptoms": my_symptoms,
+        "records": records,
+        "background": background
+    })
 
 @login_required(redirect_field_name=None)
 def profile_view(request):

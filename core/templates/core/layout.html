@@ -5,6 +5,7 @@
     <head>
         <title>{% block title %}Pocket Advocate{% endblock %}</title>
 		<link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
 		
 		{% block script %}
 		{% endblock %}
@@ -44,7 +45,11 @@
 				</div>
 			</nav>
 		{% endif %}
+		
         {% block body %}
+        {% endblock %}
+		
+		{% block bodyScript %}
         {% endblock %}
     </body>
 </html>
