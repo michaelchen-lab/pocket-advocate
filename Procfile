@@ -1,1 +1,1 @@
-web: gunicorn pocket-advocate:app --log-file -
+web: gunicorn project.wsgi --log-file -
