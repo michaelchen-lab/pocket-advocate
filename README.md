@@ -1,7 +1,7 @@
 # Pocket Advocate
 ###### Michael, Anastasia, William and Zachs @ IvyHacks 2020
 
-Pocket Advocate is a healthcare web app which aims to allow the general public to advocate for their personal health through better medication and simplified health insurance claims.
+Pocket Advocate is a healthcare web app which aims to allow the general public to advocate for better medication and easier health insurance claims.
 
 ## The Problem
 
