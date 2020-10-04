@@ -1,4 +1,5 @@
 {
+	"diagnosis": "(include diagnosis here)",
 	"profile": {
 		"general": {
 			"arrythmia": "No", 
@@ -15,7 +16,7 @@
 			"height_in": "4 in"
 		}, 
 		"family_history": {
-			"cancer": "No", 
+			"cancer": "No",
 			"heart_disease": "Yes"
 		}
 	}, 

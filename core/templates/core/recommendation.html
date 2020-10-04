@@ -1,0 +1,68 @@
+{% extends "core/layout.html" %}
+
+{% block body %}
+	
+	<div class="flex justify-center">
+		<div class="pt-4 mb-2 w-full max-w-2xl">
+			<p class="text-lg font-semibold">Suggest Medication</p>
+		</div>
+	</div>
+	
+	<div class="flex justify-center">
+		<div class="w-full max-w-2xl pb-2">
+			<form id="background-form" class="bg-white shadow-md rounded px-6 pt-2 pb-4 mb-4" method="post">
+				{% csrf_token %}
+				
+				<div class="flex w-full py-2">
+					<textarea name="diagnosis" class="w-full px-2 py-1 border rounded border-gray-500 focus:outline-none focus:bg-white focus:border-orange-500" rows="4" placeholder="Type your diagnosis here..."></textarea>
+				</div>
+				<div class="flex w-full pt-2">
+					<div class="w-2/3">
+					</div>
+					<div class="w-1/3">
+						<button class="float-right bg-orange-500 hover:bg-orange-700 text-white font-semibold py-1 px-4 rounded">
+							Recommend
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	
+	<div class="flex justify-center">
+		<div class="mb-2 w-full max-w-2xl">
+			<p class="text-lg font-semibold">My Recommendations</p>
+		</div>
+	</div>
+	
+	{% for diagnosis, recommendation in recommendations.items %}
+		<div class="flex justify-center">
+			<div class="bg-white shadow-md rounded px-6 pt-3 pb-4 mb-4 w-full max-w-2xl pt-2 pb-4">
+				<div class="flex w-full pt-2">
+					<div class="w-1/4">
+						<p class="font-semibold text-black">Diagnosis</p>
+					</div>
+					<div class="w-3/4 border border-gray-400 rounded pl-2 py-1">
+						<p class="text-black">{{ diagnosis }}</p>
+					</div>
+				</div>
+				<div class="flex w-full pt-2 pb-1">
+					<div class="w-1/4">
+						<p class="font-semibold text-black">Medication</p>
+					</div>
+					<div class="w-3/4 border border-gray-400 rounded pl-2 py-1">
+						{% for medication in recommendation %}
+							<p class="font-semibold text-orange-500">{{ medication.Medication }}</p>
+							<ul class="list-disc list-inside pl-4">
+								{% for info in medication.Highlights %}
+									<li><a href="{{ info.1 }}" >{{ info.0 }}</a></li>
+								{% endfor %}
+							</ul>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+		</div>
+	{% endfor %}
+	
+{% endblock %}

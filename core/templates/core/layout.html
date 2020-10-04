@@ -24,8 +24,15 @@
 					<a href="{% url 'index' %}" class="font-semibold text-xl tracking-tight">Pocket Advocate</a>
 				</div>
 				<div class="text-md">
-					<a href="#" class="ml-8 text-orange-300 hover:text-white">
-						Recommend Medication
+					<a 
+						{% if page_name == 'recommend' %}
+							class="ml-4 text-white hover:text-white"
+						{% else %}
+							href="{% url 'recommend' %}" 
+							class="ml-4 text-orange-300 hover:text-white"
+						{% endif %}
+					>
+						Recommendations
 					</a>
 					<a 
 						{% if page_name == 'profile' %}

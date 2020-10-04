@@ -99,12 +99,45 @@
 			</div>
 			
 			{# Recent Recommendation #}
-			<div class="col-span-2 h-full">
-				<div class="flex h-full border rounded bg-white shadow-md">
-					<div class="w-full px-8 pt-2">
-						<p class="text-lg pb-2 font-semibold">Recent Recommendation</p>
-						<p class="text-sm text-center align-middle">Oops! No recommendations found.</p>
+			<div class="col-span-2">
+				<div class="h-full border rounded bg-white shadow-md">
+					<div class="flex w-full px-8 pt-2">
+						<p class="min-w-full text-lg pb-2 font-semibold border-b py-2 border-orange-500">Recent Recommendation</p>
 					</div>
+					{% if my_diagnosis %}
+						<div class="flex w-full px-8 pt-2">
+							<div class="w-1/3">
+								<p class="pb-2 font-semibold">Diagnosis</p>
+							</div>
+							<div class="w-2/3">
+								<p class="pb-2">{{ my_diagnosis }}</p>
+							</div>
+						</div>
+						<div class="flex w-full px-8 pt-2">
+							<div class="w-1/3">
+								<p class="pb-2 font-semibold">Medications</p>
+							</div>
+							
+							<div class="w-2/3">
+								
+								{% for meds in my_medications %}
+								<div class="flex">
+									<div class="w-1/2">
+										<p class="pb-2 font-semibold text-orange-600">{{ meds.0 }}</p>
+									</div>
+									<div class="w-1/2">
+										<p class="pb-2 font-semibold text-orange-600">{{ meds.1 }}</p>
+									</div>
+								</div>
+								{% endfor %}
+								
+							</div>
+						</div>
+					{% else %}
+						<div class="flex w-full h-24 items-center align-middle">
+							<p class="min-w-full text-sm text-center">Oops! No recommendations found.</p>
+						</div>
+					{% endif %}
 				</div>
 			</div>
 			
@@ -145,7 +178,7 @@
 							<p class="">Height</p>
 						</div>
 						<div class="w-1/3">
-							<p class="font-semibold text-orange-500">{{ background.height }}</span>
+							<p class="font-semibold text-orange-600">{{ background.height }}</span>
 						</div>
 					</div>
 					<div class="flex w-full px-8 py-1">
@@ -153,7 +186,7 @@
 							<p class="">Weight</p>
 						</div>
 						<div class="w-1/3">
-							<p class="font-semibold text-orange-500">{{ background.weight }}</span>
+							<p class="font-semibold text-orange-600">{{ background.weight }}</span>
 						</div>
 					</div>
 					<div class="flex w-full px-8 py-1">
@@ -161,7 +194,7 @@
 							<p class="">Age</p>
 						</div>
 						<div class="w-1/3">
-							<p class="font-semibold text-orange-500">{{ background.age }}</span>
+							<p class="font-semibold text-orange-600">{{ background.age }}</span>
 						</div>
 					</div>
 					<div class="flex w-full px-8 py-1">
@@ -169,7 +202,7 @@
 							<p class="">Sex</p>
 						</div>
 						<div class="w-1/3">
-							<p class="font-semibold text-orange-500">{{ background.sex }}</span>
+							<p class="font-semibold text-orange-600">{{ background.sex }}</span>
 						</div>
 					</div>
 					<div class="flex w-full px-8 py-1">
@@ -177,7 +210,7 @@
 							<p class="">Smoker</p>
 						</div>
 						<div class="w-1/3">
-							<p class="font-semibold text-orange-500">{{ background.smoker }}</span>
+							<p class="font-semibold text-orange-600">{{ background.smoker }}</span>
 						</div>
 					</div>
 					<div class="flex w-full px-8 pt-1 pb-6">
@@ -185,7 +218,7 @@
 							<p class="">Alcohol</p>
 						</div>
 						<div class="w-1/3">
-							<p class="font-semibold text-orange-500">{{ background.alcohol }}</span>
+							<p class="font-semibold text-orange-600">{{ background.alcohol }}</span>
 						</div>
 					</div>
 				</div>

@@ -1,4 +1,5 @@
 from datetime import datetime
+from collections import OrderedDict
 
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
@@ -8,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 
 from .models import User, Profile, Symptom, SymptomRecord
+from .utils import get_recommendation
 
 global PROFILE_FIELDS
 PROFILE_FIELDS = {
@@ -66,7 +68,18 @@ def index(request):
     
     background = request.user.profile.profile['background']
     background['height'] = background['height_ft'] + ' ' + background['height_in']
-    print(background)
+    
+    recommendations = request.user.profile.recommendations
+    recommendations = dict(OrderedDict(reversed(list(OrderedDict(recommendations).items()))))
+    if recommendations != {}:
+        for diagnosis,details in recommendations.items():
+            my_diagnosis = diagnosis
+            my_medications = [detail['Medication'] for detail in details]
+            my_medications = [my_medications[i:i+2] for i in range(0, len(my_medications), 2)] 
+            break
+    else:
+        my_diagnosis = False
+        my_medications = False
     
     symptoms = [symptom.title if len(symptom.title) < 70 else symptom.title[:70]+'...' for symptom in Symptom.objects.all()]
 
@@ -78,7 +91,27 @@ def index(request):
         
         "my_symptoms": my_symptoms,
         "records": records,
-        "background": background
+        "background": background,
+        "my_diagnosis": my_diagnosis,
+        "my_medications": my_medications
+    })
+
+@login_required(redirect_field_name=None)
+def recommendation_view(request):
+    if request.method == "POST":
+        diagnosis = request.POST["diagnosis"]
+        data = {} ## Background info, symptom history, diagnosis
+        recommendation_data = get_recommendation(data)
+        print(recommendation_data)
+        
+        request.user.profile.recommendations[diagnosis] = recommendation_data
+        print(request.user.profile.recommendations)
+        request.user.profile.save()
+        
+    recommendations = request.user.profile.recommendations
+    return render(request, "core/recommendation.html", {
+        "page_name": "recommend",
+        "recommendations": dict(OrderedDict(reversed(list(OrderedDict(recommendations).items()))))
     })
 
 @login_required(redirect_field_name=None)
@@ -136,7 +169,11 @@ def register_view(request):
             user = User.objects.create_user(email, email, password)
             user.save()
             
-            profile = Profile(user=user, profile=PROFILE_FIELDS)
+            profile = Profile(
+                user=user, 
+                profile=PROFILE_FIELDS,
+                recommendations=[]
+            )
             profile.save()
         except IntegrityError as e:
             print(e)

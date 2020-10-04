@@ -10,6 +10,7 @@ router.register("profile", ProfileView, "profile")
 urlpatterns = [
     path("", views.index, name="index"),
     path("profile", views.profile_view, name="profile"),
+    path("recommend", views.recommendation_view, name="recommend"),
     
     ## Authentication
     path("register/", views.register_view, name="register"),
