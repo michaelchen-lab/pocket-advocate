@@ -3,6 +3,8 @@
 
 Pocket Advocate is a healthcare web app which aims to allow the general public to advocate for better medication and easier health insurance claims.
 
+[![Demonstration Video](https://img.youtube.com/vi/B9ss68If7cw/0.jpg)](https://youtu.be/B9ss68If7cw)
+
 ## The Problem
 
 Healthcare in the US is a nightmare. Insurance companies fight against prescription of better, but more expensive drugs to decrease expenses. Medical professionals' inability to keep up with the huge volume of medical literature leads to prescription of less suitable drugs. These problems persist at an expense of our nation's healthcare.
